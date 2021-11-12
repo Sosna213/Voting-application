@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -24,16 +25,21 @@ public class User implements UserDetails, Serializable {
     private String username;
     @Column(name = "password",nullable = false)
     private String password;
-    @ManyToOne
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
-    private Role role;
+    private Collection<Role> roles = new ArrayList<>();
     @Column(name = "is_active", nullable = false, columnDefinition = "boolean default true")
     private boolean isActive;
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(this.role.getRoleName()));
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        this.getRoles().forEach(role ->
+        {
+            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+        });
+        return authorities;
     }
 
     @Override
