@@ -1,0 +1,50 @@
+spring:
+  main:
+    banner-mode: off
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/VotingApplication
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: 1234
+
+logging:
+  level:
+      org: error
+
+auth-whitelist:
+  /v2/api-docs,
+  /swagger-resources,
+  /swagger-resources/**,
+  /configuration/ui,
+  /configuration/security,
+  /swagger-ui.html,
+  /webjars/**,
+  /v3/api-docs/**,
+  /swagger-ui/**,
+  /users/**,
+  /user/**,
+  /login/**,
+  /sign-up/**,
+  /sign-in/**,
+  /register/**
+
+roles:
+  admin: ADMIN
+  user: USER
+
+permits:
+  user:
+    /users
+  admin:
+    /users/add

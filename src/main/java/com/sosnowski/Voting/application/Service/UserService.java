@@ -36,10 +36,11 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
-    public void signUpUser(String username, String password){
+    public void registerUser(String username, String password, String email){
         final String encryptedPassword = passwordEncoder.encode(password);
         User user = new User();
         user.setUsername(username);
+        user.setEmail(email);
         user.setPassword(encryptedPassword);
         user.setActive(true);
         Role role = new Role();

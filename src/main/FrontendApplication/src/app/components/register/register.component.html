@@ -1,0 +1,62 @@
+<div class="offset-1 pt-5">
+  <form class="col-8 offset-2" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <mat-card>
+    <mat-card-header>
+      <mat-card-title>Rejestracja użytkownika</mat-card-title>
+    </mat-card-header>
+    <div class="row pt-3">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Nazwa użytkownika" formControlName="username">
+          <mat-error *ngIf="registerForm.controls['username'].hasError('required')">
+            Nazwa użytkownika jest <strong>wymagana</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row pt-2">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-label>Adres email</mat-label>
+          <input matInput placeholder="test@domena.com" formControlName="email">
+          <mat-error *ngIf="registerForm.controls['email'].hasError('required')">
+            Email jest <strong>wymagany</strong>
+          </mat-error>
+          <mat-error *ngIf="registerForm.controls['email'].hasError('email')">
+            Email jest <strong>niepoprawny</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row pt-2">
+      <div class="col-6">
+        <mat-form-field class="full-width">
+          <mat-label>Hasło</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="registerForm.controls['password'].hasError('required')">
+            Hasło jest <strong>wymagane</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-6 ">
+        <mat-form-field class="full-width">
+          <mat-label>Powtórz hasło</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" formControlName="repeatPassword">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="registerForm.controls['repeatPassword'].hasError('required')">
+            Powtórzenia hasła jest <strong>wymagane</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+      <mat-card-actions class="text-align-right mb-2 pr-3">
+        <button mat-raised-button color="primary" type="submit">Zarejestruj</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

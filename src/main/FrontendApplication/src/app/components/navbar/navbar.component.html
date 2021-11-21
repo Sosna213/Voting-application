@@ -1,0 +1,12 @@
+<mat-toolbar>
+  <div class="col-1">
+    <span>VotingApplication</span>
+  </div>
+  <div class="col-1 offset-9 login-button-align">
+    <button mat-raised-button *ngIf="!isLoggedIn()" class="navbar-button" color="primary" (click)="goToLoginPage()">Logowanie</button>
+  </div>
+  <div class="col-1">
+    <button mat-raised-button *ngIf="isLoggedIn()" class="navbar-button" color="primary" (click)="logout()">Wyloguj</button>
+    <button mat-stroked-button *ngIf="!isLoggedIn()"  class="navbar-button" color="primary" (click)="goToRegisterPage()">Rejestracja</button>
+  </div>
+</mat-toolbar>

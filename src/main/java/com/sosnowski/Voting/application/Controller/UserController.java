@@ -15,13 +15,15 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/users/add")
-    public User addUser(@RequestBody User user) {
-        return userService.addUser(user);
+    public ResponseEntity<User> addUser(@RequestBody User user) {
+        User returnedUser = userService.addUser(user);
+        return ResponseEntity.ok().body(returnedUser);
     }
 
     @GetMapping("/users")
     public ResponseEntity<List<User>> findUsers() {
-        return ResponseEntity.ok().body(userService.findUsers());
+        List<User> users = userService.findUsers();
+        return ResponseEntity.ok().body(users);
     }
 
     @GetMapping("/users/{username}")
@@ -30,9 +32,9 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String signUp(String username, String password) {
-        userService.signUpUser(username, password);
-        return "redirect:/login";
+    public ResponseEntity<String> registerUser(@RequestBody User user) {
+        userService.registerUser(user.getUsername(), user.getPassword(), user.getEmail());
+        return ResponseEntity.ok().body("User has been registered!");
     }
 
 }

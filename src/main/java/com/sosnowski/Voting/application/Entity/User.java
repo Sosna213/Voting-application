@@ -25,6 +25,8 @@ public class User implements UserDetails, Serializable {
     private String username;
     @Column(name = "password",nullable = false)
     private String password;
+    @Column(name = "email",nullable = false)
+    private String email;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Collection<Role> roles = new ArrayList<>();
