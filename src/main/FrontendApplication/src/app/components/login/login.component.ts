@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {AuthService} from "../../services/Auth/auth.service";
+import {AuthService} from "../../services/auth/auth.service";
+import {LocalStorageService} from "../../services/local-storage/local-storage.service";
 
 export type UserLoginModel = {
   username: string,
@@ -24,7 +25,7 @@ export class LoginComponent implements OnInit {
   readonly loginUrl = '/login';
   response: any;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router, private localStorage: LocalStorageService) {
   }
 
   ngOnInit(): void {
@@ -32,18 +33,25 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     if (this.loginForm.valid) {
-
       const userLoginData: UserLoginModel = {
        username: this.loginForm.controls['username'].value,
        password: this.loginForm.controls['password'].value
       }
-
-
-        this.response = this.authService.loginUser(this.loginUrl, userLoginData);
-      this.router.navigate(['']);
+      this.authService.loginUser(this.loginUrl, userLoginData)
+        .subscribe( res=>{
+        this.localStorage.setItem('token', res.accessToken);
+        this.localStorage.setItem('refreshToken', res.refreshToken);
+        this.router.navigate(['']);
+      },
+          error => {
+          console.error(error);
+          });
     } else {
-      alert('Error');
+      alert('Dane nieprawidłowe');
     }
+  }
+  private setToken(key: string, token: string): void {
+    this.localStorage.setItem(key, token);
   }
 
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
-import {LocalStorageService} from "../../services/LocalStorage/local-storage.service";
-import {AuthService} from "../../services/Auth/auth.service";
+import {LocalStorageService} from "../../services/local-storage/local-storage.service";
+import {AuthService} from "../../services/auth/auth.service";
 
 @Component({
   selector: 'app-navbar',
@@ -32,11 +32,7 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['register']);
   }
   isLoggedIn(): boolean{
-    if(this.localStorageService.getItem('token') === null){
-      return false;
-    } else{
-      return true;
-    }
+      return this.localStorageService.isLoggedIn();
   }
 
 }

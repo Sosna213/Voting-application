@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { RouterModule } from '@angular/router';
 
 import { GaugeModule } from 'angular-gauge';
@@ -24,6 +24,7 @@ import {MatSliderModule} from "@angular/material/slider";
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
+import {TokenInterceptorService} from "./services/token-interceptor/token-interceptor.service";
 
 
 @NgModule({
@@ -55,7 +56,9 @@ import { MatCardModule } from '@angular/material/card';
     MatRadioModule,
     MatCardModule
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
