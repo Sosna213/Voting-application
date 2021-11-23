@@ -37,17 +37,15 @@ export class AuthService {
          console.error(err);
          return throwError(err);
        }))
-     )
+     );
   }
 
   refreshToken(): Observable<{accessToken: string; refreshToken: string}> {
     const refreshToken = this.localStorageService.getItem('refreshToken');
 
-    return this.http.post<{accessToken: string; refreshToken: string}>(
-      '/refresh-token',
-      {
-        refreshToken
-      }).pipe(
+    return this.http.get<{accessToken: string; refreshToken: string}>(
+      '/token-refresh',
+      ).pipe(
       tap(response => {
         this.setToken('token', response.accessToken);
         this.setToken('refreshToken', response.refreshToken);

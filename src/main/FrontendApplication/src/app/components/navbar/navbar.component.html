@@ -2,6 +2,7 @@
   <div class="col-1">
     <span>VotingApplication</span>
   </div>
+  <button mat-stroked-button class="navbar-button" color="primary" (click)="goToUsersPage()">users</button>
   <div class="col-1 offset-9 login-button-align">
     <button mat-raised-button *ngIf="!isLoggedIn()" class="navbar-button" color="primary" (click)="goToLoginPage()">Logowanie</button>
   </div>

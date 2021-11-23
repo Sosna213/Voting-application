@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import {BehaviorSubject, catchError, filter, Observable, switchMap, take, throwError} from "rxjs";
 import {LocalStorageService} from "../local-storage/local-storage.service";
@@ -8,13 +8,14 @@ import {Router} from "@angular/router";
 @Injectable({
   providedIn: 'root'
 })
-export class TokenInterceptorService implements HttpInterceptor{
+export class TokenInterceptorService implements HttpInterceptor {
   private refreshingInProgress: boolean = false;
   private accessTokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   constructor(private localStorageService: LocalStorageService,
               private authService: AuthService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const accessToken = this.localStorageService.getItem('token');
@@ -38,18 +39,26 @@ export class TokenInterceptorService implements HttpInterceptor{
       })
     );
   }
+
   private addAuthorizationHeader(request: HttpRequest<any>, token: string): HttpRequest<any> {
-    if (token) {
+    if (token && request.url !='/token-refresh') {
+      // console.log(request.url)
       return request.clone({setHeaders: {Authorization: `Bearer ${token}`}});
+    }
+    const refreshToken = this.localStorageService.getItem('refreshToken');
+    if (refreshToken && request.url === '/token-refresh') {
+      return request.clone({setHeaders: {Authorization: `Bearer ${refreshToken}`}});
     }
     return request;
   }
+
   private logoutAndRedirect(err: any): Observable<HttpEvent<any>> {
     this.authService.logout();
     this.router.navigateByUrl('/login');
 
     return throwError(err);
   }
+
   private refreshToken(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (!this.refreshingInProgress) {
       this.refreshingInProgress = true;

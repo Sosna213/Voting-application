@@ -25,6 +25,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import {TokenInterceptorService} from "./services/token-interceptor/token-interceptor.service";
+import { TestComponent } from './components/test/test/test.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import {TokenInterceptorService} from "./services/token-interceptor/token-interc
     NavbarComponent,
     LoginComponent,
     HomeComponent,
-    RegisterComponent
+    RegisterComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,
