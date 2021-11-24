@@ -36,7 +36,7 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
-    public void registerUser(String username, String password, String email){
+    public User registerUser(String username, String password, String email){
         final String encryptedPassword = passwordEncoder.encode(password);
         User user = new User();
         user.setUsername(username);
@@ -48,7 +48,8 @@ public class UserService implements UserDetailsService {
         ArrayList<Role> roles = new ArrayList<>();
         roles.add(role);
         user.setRoles(roles);
-        final User createdUser = userRepository.save(user);
+        User createdUser = userRepository.save(user);
+        return createdUser;
     }
 
     @Override

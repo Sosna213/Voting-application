@@ -32,9 +32,9 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody User user) {
-        userService.registerUser(user.getUsername(), user.getPassword(), user.getEmail());
-        return ResponseEntity.ok().body("User has been registered!");
+    public ResponseEntity<User> registerUser(@RequestBody User user) {
+       User registeredUser = userService.registerUser(user.getUsername(), user.getPassword(), user.getEmail());
+        return ResponseEntity.ok().body(registeredUser);
     }
 
 }
