@@ -9,6 +9,7 @@ import java.util.List;
 @Data
 public class VotingWithAnswersDTO implements Serializable {
     Long votingId;
+    String votingName;
     String question;
     List<String> answers;
 }
