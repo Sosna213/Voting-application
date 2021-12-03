@@ -29,6 +29,8 @@ public class VotingService {
         votingToAdd.setVotingName(addVotingDTO.getVotingName());
         votingToAdd.setQuestion(addVotingDTO.getQuestion());
         User userToAddVoting = new User();
+        votingToAdd.setRestricted(addVotingDTO.getRestricted());
+        votingToAdd.setEndDate(addVotingDTO.getEndDate());
         userToAddVoting.setUserId(addVotingDTO.getUserId());
         votingToAdd.setUser(userToAddVoting);
         final Voting addedVoting = votingRepository.save(votingToAdd);
@@ -48,6 +50,8 @@ public class VotingService {
         votingWithAnswersDTO.setVotingId(votingId);
         votingWithAnswersDTO.setQuestion(votingRepository.getById(votingId).getQuestion());
         votingWithAnswersDTO.setVotingName(votingRepository.getById(votingId).getVotingName());
+        votingWithAnswersDTO.setRestricted(votingRepository.getById(votingId).getRestricted());
+        votingWithAnswersDTO.setEndDate(votingRepository.getById(votingId).getEndDate());
         List<String> answers = new ArrayList<>();
         answerRepository.findAnswersByVotingVotingId(votingId).forEach(answer -> {
             answers.add(answer.getAnswer());
@@ -63,6 +67,8 @@ public class VotingService {
             VotingDTO votingDTO = new VotingDTO();
             votingDTO.setVotingId(voting.getVotingId());
             votingDTO.setVotingName(voting.getVotingName());
+            votingDTO.setRestricted(voting.getRestricted());
+            votingDTO.setEndDate(voting.getEndDate());
             votingDTO.setQuestion(voting.getQuestion());
             votingDTOList.add(votingDTO);
         });
@@ -82,6 +88,8 @@ public class VotingService {
         Voting votingToEdit = votingRepository.getById(editVotingDTO.getVotingId());
         deleteVotingAndAnswers(editVotingDTO.getVotingId());
         votingToEdit.setVotingName(editVotingDTO.getVotingName());
+        votingToEdit.setEndDate(editVotingDTO.getEndDate());
+        votingToEdit.setRestricted(editVotingDTO.getRestricted());
         votingToEdit.setQuestion(editVotingDTO.getQuestion());
         final Voting addedVoting = votingRepository.save(votingToEdit);
         editVotingDTO.getAnswers().forEach(answerDTO -> {
