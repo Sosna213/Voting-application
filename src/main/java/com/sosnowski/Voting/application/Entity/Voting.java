@@ -3,6 +3,8 @@ package com.sosnowski.Voting.application.Entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Date;
 
 @Data
 @Entity(name = "Votings")
@@ -17,7 +19,15 @@ public class Voting {
     private String votingName;
     @Column(name = "question",nullable = false)
     private String question;
+    @Column(name = "restricted",nullable = false)
+    private Boolean restricted;
+    @Column(name = "endDate")
+    private Date endDate;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private Collection<User> sharedToUsers;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
+
 }
