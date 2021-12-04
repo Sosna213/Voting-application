@@ -40,8 +40,10 @@ auth-whitelist:
   /login/**,
   /register/**,
   /voting/**,
-  /userId/**
-
+  /userId/**,
+  /shareToUser/**,
+  /sharedUsers/**,
+  /votingSharedToUser/**
 
 
 roles:
