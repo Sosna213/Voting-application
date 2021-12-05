@@ -166,4 +166,12 @@ public class VotingService {
         });
         return votingDTOList;
     }
+
+    public VotingResult vote(VoteDTO vote){
+        VotingResult voteToSave = new VotingResult();
+        voteToSave.setVoting(votingRepository.getById(vote.getVotingId()));
+        voteToSave.setAnswer(answerRepository.getById(vote.getAnswerId()));
+        voteToSave.setUser(userRepository.findByUsername(vote.getUsername()));
+        return votingResultRepository.save(voteToSave);
+    }
 }

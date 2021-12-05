@@ -2,6 +2,7 @@ package com.sosnowski.Voting.application.Controller;
 
 import com.sosnowski.Voting.application.DTOs.*;
 import com.sosnowski.Voting.application.Entity.User;
+import com.sosnowski.Voting.application.Entity.VotingResult;
 import com.sosnowski.Voting.application.Service.VotingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -60,5 +61,14 @@ public class VotingController {
     public ResponseEntity<List<SharedVotingDTO>> votingSharedToUser(@PathVariable String username){
         List<SharedVotingDTO> votingList = votingService.getVotingSharedToUser(username);
         return ResponseEntity.ok().body(votingList);
+    }
+    @PostMapping("/vote")
+    public ResponseEntity<VoteDTO> vote(@RequestBody VoteDTO vote){
+        VotingResult votingResult = votingService.vote(vote);
+        VoteDTO dtoToReturn = new VoteDTO();
+        dtoToReturn.setVotingId(votingResult.getVoting().getVotingId());
+        dtoToReturn.setUsername(votingResult.getUser().getUsername());
+        dtoToReturn.setAnswerId(votingResult.getAnswer().getAnswerId());
+        return ResponseEntity.ok().body(dtoToReturn);
     }
 }
