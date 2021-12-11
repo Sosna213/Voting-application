@@ -31,6 +31,14 @@ public class UserService implements UserDetailsService {
     public List<User> findUsers(){
         return userRepository.findAll();
     }
+    public List<String> findUsernames(){
+        List<User> users = userRepository.findAll();
+        List<String> usernames = new ArrayList<>();
+        users.forEach(user->{
+            usernames.add(user.getUsername());
+        });
+        return usernames;
+    }
 
     public User findUserByUsername (String username)
     {

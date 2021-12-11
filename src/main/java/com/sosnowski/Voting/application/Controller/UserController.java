@@ -1,6 +1,5 @@
 package com.sosnowski.Voting.application.Controller;
 
-import com.sosnowski.Voting.application.DTOs.UserRegisterDTO;
 import com.sosnowski.Voting.application.Entity.User;
 import com.sosnowski.Voting.application.Service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +24,12 @@ public class UserController {
     public ResponseEntity<List<User>> findUsers() {
         List<User> users = userService.findUsers();
         return ResponseEntity.ok().body(users);
+    }
+
+    @GetMapping("/usernames")
+    public ResponseEntity<List<String>> findUsernames() {
+        List<String> usernames = userService.findUsernames();
+        return ResponseEntity.ok().body(usernames);
     }
 
     @GetMapping("/users/{username}")

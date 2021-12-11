@@ -11,6 +11,7 @@ public class EditVotingDTO {
     String votingName;
     String question;
     Boolean restricted;
+    Boolean explicit;
     Date endDate;
     List<AnswerDTO> answers;
 }

@@ -37,6 +37,8 @@ public class VotingService {
         User userToAddVoting = new User();
         votingToAdd.setRestricted(addVotingDTO.getRestricted());
         votingToAdd.setEndDate(addVotingDTO.getEndDate());
+        votingToAdd.setActive(true);
+        votingToAdd.setExplicit(addVotingDTO.getExplicit());
         userToAddVoting.setUserId(addVotingDTO.getUserId());
         votingToAdd.setUser(userToAddVoting);
         final Voting addedVoting = votingRepository.save(votingToAdd);
@@ -51,6 +53,12 @@ public class VotingService {
         return addVotingDTO;
     }
 
+    private void deleteResultForVoting(Long votingId){
+        votingResultRepository.findVotingResultsByVotingVotingId(votingId).forEach(votingResult -> {
+            votingResultRepository.delete(votingResult);
+        });
+    }
+
     private void deleteAnswersForVoting(Long votingId) {
         answerRepository.findAnswersByVotingVotingId(votingId).forEach(answer -> {
             answerRepository.delete(answer);
@@ -63,6 +71,8 @@ public class VotingService {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
         votingWithAnswersDTO.setQuestion(votingRepository.getById(votingId).getQuestion());
         votingWithAnswersDTO.setVotingName(votingRepository.getById(votingId).getVotingName());
+        votingWithAnswersDTO.setActive(votingRepository.getById(votingId).getActive());
+        votingWithAnswersDTO.setExplicit(votingRepository.getById(votingId).getExplicit());
         votingWithAnswersDTO.setRestricted(votingRepository.getById(votingId).getRestricted());
         if(votingRepository.getById(votingId).getEndDate() != null) {
             String endDate = dateFormat.format(votingRepository.getById(votingId).getEndDate());
@@ -94,14 +104,19 @@ public class VotingService {
         return votingId;
     }
 
+    @Transactional
     public EditVotingDTO editVoting(EditVotingDTO editVotingDTO){
         Voting votingToEdit = votingRepository.getById(editVotingDTO.getVotingId());
         votingToEdit.setVotingName(editVotingDTO.getVotingName());
         votingToEdit.setEndDate(editVotingDTO.getEndDate());
         votingToEdit.setRestricted(editVotingDTO.getRestricted());
         votingToEdit.setQuestion(editVotingDTO.getQuestion());
+        votingToEdit.setActive(true);
+        votingToEdit.setExplicit(editVotingDTO.getExplicit());
+        deleteResultForVoting(editVotingDTO.getVotingId());
         deleteAnswersForVoting(editVotingDTO.getVotingId());
         final Voting addedVoting = votingRepository.save(votingToEdit);
+
         editVotingDTO.getAnswers().forEach(answerDTO -> {
             Answer answerToAdd = new Answer();
             answerToAdd.setVoting(addedVoting);
@@ -120,6 +135,13 @@ public class VotingService {
         votingRepository.save(voting);
         return userToShare.getUserId();
      }
+     public Long deactivateVoting(Long votingId){
+         Voting votingToDeactivate = votingRepository.getById(votingId);
+         votingToDeactivate.setActive(false);
+         Voting votingDeactivated = votingRepository.save(votingToDeactivate);
+         return votingDeactivated.getVotingId();
+     }
+
 
     public Collection<User> getSharedUsersVoting(Long votingId) {
         Collection<User> sharedToUsers = votingRepository.getById(votingId).getSharedToUsers();
@@ -156,6 +178,8 @@ public class VotingService {
             VotingDTO votingDTO = new VotingDTO();
             votingDTO.setVotingId(voting.getVotingId());
             votingDTO.setVotingName(voting.getVotingName());
+            votingDTO.setActive(voting.getActive());
+            votingDTO.setExplicit(voting.getExplicit());
             votingDTO.setRestricted(voting.getRestricted());
             if(voting.getEndDate() != null){
                 String endDate = dateFormat.format(voting.getEndDate());

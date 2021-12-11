@@ -21,6 +21,10 @@ public class Voting {
     private String question;
     @Column(name = "restricted",nullable = false)
     private Boolean restricted;
+    @Column(name = "active",nullable = false)
+    private Boolean active;
+    @Column(name = "explicit",nullable = false)
+    private Boolean explicit;
     @Column(name = "endDate")
     private Date endDate;
     @ManyToMany(fetch = FetchType.LAZY)

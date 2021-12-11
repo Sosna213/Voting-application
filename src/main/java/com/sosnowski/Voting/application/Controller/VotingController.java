@@ -47,6 +47,12 @@ public class VotingController {
         return ResponseEntity.ok().body(votingEdited);
     }
 
+    @PutMapping("/deactivate-voting/{votingId}")
+    public ResponseEntity<Long> deactivateVoting(@PathVariable Long votingId){
+        Long deactivatedVoting = votingService.deactivateVoting(votingId);
+        return ResponseEntity.ok().body(deactivatedVoting);
+    }
+
     @PostMapping("/shareToUser")
     public ResponseEntity<Long> shareVotingToUser(@RequestBody ShareVotingToUserDTO shareVotingToUserDTO) {
         Long addedUserId = votingService.shareVotingToUser(shareVotingToUserDTO);

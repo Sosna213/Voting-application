@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface VotingResultRepository extends JpaRepository<VotingResult, Long> {
     public List<VotingResult> findVotingResultsByUserUsername(String username);
+    public List<VotingResult> findVotingResultsByVotingVotingId(Long votingId);
 
 }

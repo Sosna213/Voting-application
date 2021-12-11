@@ -44,7 +44,10 @@ auth-whitelist:
   /shareToUser/**,
   /sharedUsers/**,
   /votingSharedToUser/**,
-  /vote/**
+  /vote/**,
+  /deactivate-voting/**,
+  /users-group/add/**,
+  /usernames
 
 
 roles:
