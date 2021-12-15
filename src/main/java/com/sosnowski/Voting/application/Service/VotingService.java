@@ -10,7 +10,6 @@ import com.sosnowski.Voting.application.Repository.UserRepository;
 import com.sosnowski.Voting.application.Repository.VotingRepository;
 import com.sosnowski.Voting.application.Repository.VotingResultRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.event.PublicInvocationEvent;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,6 +17,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -126,14 +126,17 @@ public class VotingService {
         return editVotingDTO;
     }
 
-     public Long shareVotingToUser(ShareVotingToUserDTO shareVotingToUserDTO){
-        User userToShare = userRepository.findByUsername(shareVotingToUserDTO.getUsername());
-        Voting voting = votingRepository.getById(shareVotingToUserDTO.getVotingId());
+     public List<String> shareVotingToUsers(ShareVotingToUsersDTO shareVotingToUsersDTO){
+        HashSet<User> users = new HashSet<>();
+        shareVotingToUsersDTO.getUsernames().forEach(username->{
+            users.add(userRepository.findByUsername(username));
+        });
+        Voting voting = votingRepository.getById(shareVotingToUsersDTO.getVotingId());
         Collection<User> sharedToUsers = voting.getSharedToUsers();
-        sharedToUsers.add(userToShare);
-        voting.setSharedToUsers(sharedToUsers);
+        users.addAll(sharedToUsers);
+        voting.setSharedToUsers(users);
         votingRepository.save(voting);
-        return userToShare.getUserId();
+        return shareVotingToUsersDTO.getUsernames();
      }
      public Long deactivateVoting(Long votingId){
          Voting votingToDeactivate = votingRepository.getById(votingId);
@@ -195,7 +198,30 @@ public class VotingService {
         VotingResult voteToSave = new VotingResult();
         voteToSave.setVoting(votingRepository.getById(vote.getVotingId()));
         voteToSave.setAnswer(answerRepository.getById(vote.getAnswerId()));
-        voteToSave.setUser(userRepository.findByUsername(vote.getUsername()));
+        if(voteToSave.getVoting().getExplicit()){
+            voteToSave.setUser(userRepository.findByUsername(vote.getUsername()));
+        }
         return votingResultRepository.save(voteToSave);
+    }
+
+    public List<ResultDTO> getResultForVoting(Long votingId){
+        List<Answer> votingAnswers = answerRepository.findAnswersByVotingVotingId(votingId);
+        List<ResultDTO> resultDTOS = new ArrayList<>();
+
+        votingAnswers.forEach(answer->{
+            ResultDTO resultDTO = new ResultDTO();
+            resultDTO.setAnswer(answer.getAnswer());
+            List<VotingResult> votingResultsForAnswer = votingResultRepository.findVotingResultsByAnswerAnswerId(answer.getAnswerId());
+            resultDTO.setNumberOfAnswers(votingResultsForAnswer.size());
+            List<String> usernames = new ArrayList<>();
+            if(votingRepository.getById(votingId).getExplicit()){
+                votingResultsForAnswer.forEach(votingResult -> {
+                    usernames.add(votingResult.getUser().getUsername());
+                });
+                resultDTO.setUsernames(usernames);
+            }
+            resultDTOS.add(resultDTO);
+        });
+        return resultDTOS;
     }
 }

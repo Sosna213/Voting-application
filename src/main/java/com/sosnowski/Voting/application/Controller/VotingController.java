@@ -53,10 +53,10 @@ public class VotingController {
         return ResponseEntity.ok().body(deactivatedVoting);
     }
 
-    @PostMapping("/shareToUser")
-    public ResponseEntity<Long> shareVotingToUser(@RequestBody ShareVotingToUserDTO shareVotingToUserDTO) {
-        Long addedUserId = votingService.shareVotingToUser(shareVotingToUserDTO);
-        return ResponseEntity.ok().body(addedUserId);
+    @PostMapping("/shareToUsers")
+    public ResponseEntity<List<String>> shareVotingToUsers(@RequestBody ShareVotingToUsersDTO shareVotingToUsersDTO) {
+        List<String> addedUserUsernames = votingService.shareVotingToUsers(shareVotingToUsersDTO);
+        return ResponseEntity.ok().body(addedUserUsernames);
     }
     @GetMapping("/sharedUsers/{votingId}")
     public ResponseEntity<Collection<User>> shareVotingToUser(@PathVariable Long votingId) {
@@ -76,5 +76,11 @@ public class VotingController {
         dtoToReturn.setUsername(votingResult.getUser().getUsername());
         dtoToReturn.setAnswerId(votingResult.getAnswer().getAnswerId());
         return ResponseEntity.ok().body(dtoToReturn);
+    }
+
+    @GetMapping("/voting-result/{votingId}")
+    public ResponseEntity<List<ResultDTO>> getVotingResult(@PathVariable Long votingId){
+        List<ResultDTO> resultDTOSToReturn = votingService.getResultForVoting(votingId);
+        return ResponseEntity.ok().body(resultDTOSToReturn);
     }
 }

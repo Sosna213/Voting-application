@@ -43,11 +43,14 @@ auth-whitelist:
   /userId/**,
   /shareToUser/**,
   /sharedUsers/**,
-  /votingSharedToUser/**,
+  /votingSharedToUsers/**,
   /vote/**,
   /deactivate-voting/**,
   /users-group/add/**,
-  /usernames
+  /usernames,
+  /user-group/**,
+  /users-group/add,
+  /voting-result/**
 
 
 roles:

@@ -5,8 +5,8 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Data
-@Entity(name = "Ansvers")
-@Table(name="Ansvers",schema = "public")
+@Entity(name = "Answers")
+@Table(name="Answers",schema = "public")
 public class Answer {
     @Id
     @Column(name = "answer_id",nullable = false,updatable = false)

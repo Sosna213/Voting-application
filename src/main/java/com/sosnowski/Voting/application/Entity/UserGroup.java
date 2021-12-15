@@ -15,7 +15,11 @@ public class UserGroup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userGroupId;
 
-    @Column(name = "user-group-name",nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id", referencedColumnName = "user_id")
+    private User owner;
+
+    @Column(name = "user_group_name",nullable = false)
     private String userGroupName;
 
     @ManyToMany(fetch = FetchType.LAZY)
