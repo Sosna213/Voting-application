@@ -50,7 +50,9 @@ auth-whitelist:
   /usernames,
   /user-group/**,
   /users-group/add,
-  /voting-result/**
+  /users-group/edit,
+  /voting-result/**,
+  /user-group/delete
 
 
 roles:

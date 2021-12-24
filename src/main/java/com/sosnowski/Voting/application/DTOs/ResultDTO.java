@@ -6,7 +6,8 @@ import java.util.List;
 
 @Data
 public class ResultDTO {
-    String answer;
-    Integer numberOfAnswers;
+    Long answerId;
+    String name;
+    Integer value;
     List<String> usernames;
 }

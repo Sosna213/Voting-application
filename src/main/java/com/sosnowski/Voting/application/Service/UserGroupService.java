@@ -1,6 +1,7 @@
 package com.sosnowski.Voting.application.Service;
 
 import com.sosnowski.Voting.application.DTOs.UserGroupAddDTO;
+import com.sosnowski.Voting.application.DTOs.UserGroupEditDTO;
 import com.sosnowski.Voting.application.DTOs.UserGroupGetDTO;
 import com.sosnowski.Voting.application.Entity.User;
 import com.sosnowski.Voting.application.Entity.UserGroup;
@@ -34,6 +35,19 @@ public class UserGroupService {
         return userGroupRepository.save(userGroup);
     }
 
+    public UserGroup editUserGroup(UserGroupEditDTO userGroupEditDTO){
+        HashSet<User> users = new HashSet<>();
+        userGroupEditDTO.getUserGroupAddDTO().getUsernames().forEach(username -> {
+            users.add(userRepository.findByUsername(username));
+        });
+        UserGroup userGroup = new UserGroup();
+        userGroup.setUserGroupId(userGroupEditDTO.getUserGroupId());
+        userGroup.setOwner(userRepository.findByUsername(userGroupEditDTO.getUserGroupAddDTO().getOwnerUsername()));
+        userGroup.setUserGroupName(userGroupEditDTO.getUserGroupAddDTO().getUserGroupName());
+        userGroup.setUsers(users);
+        return userGroupRepository.save(userGroup);
+    }
+
     public List<UserGroupGetDTO> getUserGroupsForUser(String username) {
         List<UserGroupGetDTO> userGroupGetDTOS = new ArrayList<>();
         List<UserGroup> userGroups = userGroupRepository.findUserGroupsByOwner(userRepository.findByUsername(username));
@@ -49,5 +63,10 @@ public class UserGroupService {
             userGroupGetDTOS.add(userGroupGetDTO);
         });
         return userGroupGetDTOS;
+    }
+    public Long deleteUserGroup(Long userGroupId){
+        UserGroup userGroupToDelete = userGroupRepository.getById(userGroupId);
+        userGroupRepository.delete(userGroupToDelete);
+        return userGroupId;
     }
 }

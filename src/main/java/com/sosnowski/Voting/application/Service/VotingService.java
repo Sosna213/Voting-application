@@ -68,7 +68,7 @@ public class VotingService {
     public VotingWithAnswersDTO getVotingWithAnswers(Long votingId){
         VotingWithAnswersDTO votingWithAnswersDTO = new VotingWithAnswersDTO();
         votingWithAnswersDTO.setVotingId(votingId);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         votingWithAnswersDTO.setQuestion(votingRepository.getById(votingId).getQuestion());
         votingWithAnswersDTO.setVotingName(votingRepository.getById(votingId).getVotingName());
         votingWithAnswersDTO.setActive(votingRepository.getById(votingId).getActive());
@@ -76,6 +76,7 @@ public class VotingService {
         votingWithAnswersDTO.setRestricted(votingRepository.getById(votingId).getRestricted());
         if(votingRepository.getById(votingId).getEndDate() != null) {
             String endDate = dateFormat.format(votingRepository.getById(votingId).getEndDate());
+            System.out.println(endDate);
             votingWithAnswersDTO.setEndDate(endDate);
         }
         List<AnswerDTO> answers = new ArrayList<>();
@@ -175,7 +176,7 @@ public class VotingService {
         return sharedVotingDTOS;
     }
     private List<VotingDTO> mapListOfVotingToVotingDTO(List<Voting> votingList){
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         List<VotingDTO> votingDTOList = new ArrayList<>();
         votingList.forEach(voting -> {
             VotingDTO votingDTO = new VotingDTO();
@@ -210,9 +211,10 @@ public class VotingService {
 
         votingAnswers.forEach(answer->{
             ResultDTO resultDTO = new ResultDTO();
-            resultDTO.setAnswer(answer.getAnswer());
+            resultDTO.setName(answer.getAnswer());
+            resultDTO.setAnswerId(answer.getAnswerId());
             List<VotingResult> votingResultsForAnswer = votingResultRepository.findVotingResultsByAnswerAnswerId(answer.getAnswerId());
-            resultDTO.setNumberOfAnswers(votingResultsForAnswer.size());
+            resultDTO.setValue(votingResultsForAnswer.size());
             List<String> usernames = new ArrayList<>();
             if(votingRepository.getById(votingId).getExplicit()){
                 votingResultsForAnswer.forEach(votingResult -> {
@@ -224,4 +226,5 @@ public class VotingService {
         });
         return resultDTOS;
     }
+
 }
