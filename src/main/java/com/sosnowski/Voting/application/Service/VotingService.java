@@ -53,18 +53,6 @@ public class VotingService {
         return addVotingDTO;
     }
 
-    private void deleteResultForVoting(Long votingId){
-        votingResultRepository.findVotingResultsByVotingVotingId(votingId).forEach(votingResult -> {
-            votingResultRepository.delete(votingResult);
-        });
-    }
-
-    private void deleteAnswersForVoting(Long votingId) {
-        answerRepository.findAnswersByVotingVotingId(votingId).forEach(answer -> {
-            answerRepository.delete(answer);
-        });
-    }
-
     public VotingWithAnswersDTO getVotingWithAnswers(Long votingId){
         VotingWithAnswersDTO votingWithAnswersDTO = new VotingWithAnswersDTO();
         votingWithAnswersDTO.setVotingId(votingId);
@@ -97,12 +85,18 @@ public class VotingService {
     }
     @Transactional
     public Long deleteVotingAndAnswers(Long votingId){
-        List<Answer> answers = answerRepository.findAnswersByVotingVotingId(votingId);
-        answers.forEach(answer -> {
-            answerRepository.delete(answer);
-        });
+        deleteResultForVoting(votingId);
+        deleteAnswersForVoting(votingId);
         votingRepository.deleteById(votingId);
         return votingId;
+    }
+
+    private void deleteResultForVoting(Long votingId){
+        votingResultRepository.deleteAll(votingResultRepository.findVotingResultsByVotingVotingId(votingId));
+    }
+
+    private void deleteAnswersForVoting(Long votingId) {
+        answerRepository.deleteAll(answerRepository.findAnswersByVotingVotingId(votingId));
     }
 
     @Transactional
@@ -199,9 +193,8 @@ public class VotingService {
         VotingResult voteToSave = new VotingResult();
         voteToSave.setVoting(votingRepository.getById(vote.getVotingId()));
         voteToSave.setAnswer(answerRepository.getById(vote.getAnswerId()));
-        if(voteToSave.getVoting().getExplicit()){
-            voteToSave.setUser(userRepository.findByUsername(vote.getUsername()));
-        }
+        voteToSave.setUser(userRepository.findByUsername(vote.getUsername()));
+
         return votingResultRepository.save(voteToSave);
     }
 

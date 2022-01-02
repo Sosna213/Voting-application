@@ -72,9 +72,6 @@ public class VotingController {
     public ResponseEntity<VoteDTO> vote(@RequestBody VoteDTO vote){
         VotingResult votingResult = votingService.vote(vote);
         VoteDTO dtoToReturn = new VoteDTO();
-        dtoToReturn.setVotingId(votingResult.getVoting().getVotingId());
-        dtoToReturn.setUsername(votingResult.getUser().getUsername());
-        dtoToReturn.setAnswerId(votingResult.getAnswer().getAnswerId());
         return ResponseEntity.ok().body(dtoToReturn);
     }
 
