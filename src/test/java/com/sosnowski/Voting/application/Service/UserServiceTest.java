@@ -1,5 +1,6 @@
 package com.sosnowski.Voting.application.Service;
 
+import com.sosnowski.Voting.application.DTOs.RegisterUserDTO;
 import com.sosnowski.Voting.application.DTOs.UserRegisterDTO;
 import com.sosnowski.Voting.application.Entity.Role;
 import com.sosnowski.Voting.application.Entity.User;
@@ -37,6 +38,10 @@ class UserServiceTest {
         String username = "user123";
         String password = "password123";
         String email = "user@user.pl";
+        RegisterUserDTO registerUserDTO = new RegisterUserDTO();
+        registerUserDTO.setUsername(username);
+        registerUserDTO.setEmail(email);
+        registerUserDTO.setPassword(password);
 
         User user = new User();
         user.setUsername(username);
@@ -53,7 +58,7 @@ class UserServiceTest {
         when(userRepository.save(any(User.class))).thenReturn(user);
 
         //when
-        User result = userService.registerUser(username, password, email);
+        User result = userService.registerUser(registerUserDTO);
 
         //then
         assertEquals(user, result);

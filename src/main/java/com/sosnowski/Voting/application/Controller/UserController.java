@@ -1,5 +1,6 @@
 package com.sosnowski.Voting.application.Controller;
 
+import com.sosnowski.Voting.application.DTOs.RegisterUserDTO;
 import com.sosnowski.Voting.application.Entity.User;
 import com.sosnowski.Voting.application.Service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -38,9 +39,9 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user) {
-       User registeredUser = userService.registerUser(user.getUsername(), user.getPassword(), user.getEmail());
-        return ResponseEntity.ok().body(registeredUser);
+    public ResponseEntity<User> registerUser(@RequestBody RegisterUserDTO registerUserDTO) {
+       User registeredUser = userService.registerUser(registerUserDTO);
+       return ResponseEntity.ok().body(registeredUser);
     }
     @GetMapping("/userId/{username}")
     public ResponseEntity<Long> getUserIdByUsername(@PathVariable String username){

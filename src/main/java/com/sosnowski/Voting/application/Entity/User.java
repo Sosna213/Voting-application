@@ -6,16 +6,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 @Data
 @Entity(name = "users")
 @Table(name="users",schema = "public",uniqueConstraints = {
         @UniqueConstraint(name = "user_username_unique",columnNames = "username")})
-public class User implements UserDetails, Serializable {
+public class User implements UserDetails {
 
     @Id
     @Column(name = "user_id",nullable = false,updatable = false)

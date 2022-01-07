@@ -1,16 +1,19 @@
 package com.sosnowski.Voting.application.Service;
 
+import com.sosnowski.Voting.application.DTOs.RegisterUserDTO;
 import com.sosnowski.Voting.application.DTOs.UserRegisterDTO;
 import com.sosnowski.Voting.application.Entity.Role;
 import com.sosnowski.Voting.application.Entity.User;
 import com.sosnowski.Voting.application.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,11 +48,14 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
-    public User registerUser(String username, String password, String email){
-        final String encryptedPassword = passwordEncoder.encode(password);
+    public User registerUser(RegisterUserDTO registerUserDTO){
+        if(userRepository.findByUsername(registerUserDTO.username) != null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nazwa użytkownika jest wykorzystana");
+        }
+        final String encryptedPassword = passwordEncoder.encode(registerUserDTO.password);
         User user = new User();
-        user.setUsername(username);
-        user.setEmail(email);
+        user.setUsername(registerUserDTO.username);
+        user.setEmail(registerUserDTO.email);
         user.setPassword(encryptedPassword);
         user.setActive(true);
         Role role = new Role();
