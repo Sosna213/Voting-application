@@ -25,35 +25,7 @@ logging:
 auth-whitelist:
   /token-refresh,
   /register,
-  /login,
-  /v2/api-docs,
-  /swagger-resources,
-  /swagger-resources/**,
-  /configuration/ui,
-  /configuration/security,
-  /swagger-ui.html,
-  /webjars/**,
-  /v3/api-docs/**,
-  /swagger-ui/**,
-  /users/**,
-  /user/**,
-  /login/**,
-  /register/**,
-  /voting/**,
-  /userId/**,
-  /shareToUser/**,
-  /sharedUsers/**,
-  /votingSharedToUsers/**,
-  /vote/**,
-  /deactivate-voting/**,
-  /users-group/add/**,
-  /usernames,
-  /user-group/**,
-  /users-group/add,
-  /users-group/edit,
-  /voting-result/**,
-  /user-group/delete
-
+  /login
 
 roles:
   admin: ADMIN
@@ -62,9 +34,23 @@ roles:
 permits:
   user:
     /users,
-    /userId,
-    /voting/add
-    /voting/delete/**
-    /voting-edit
+    /usernames,
+    /userId/**,
+    /users-group/add,
+    /users-group/edit,
+    /user-group/**,
+    /user-group/delete/**,
+    /voting/add,
+    /voting/**,
+    /voting/forUser/**,
+    /voting/delete/**,
+    /voting-edit,
+    /deactivate-voting/**,
+    /shareToUsers,
+    /sharedUsers/**,
+    /votingSharedToUser/**,
+    /vote,
+    /voting-result/**
+
   admin:
     /users/add

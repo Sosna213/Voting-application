@@ -1,5 +1,6 @@
 package com.sosnowski.Voting.application.Entity;
 
+import com.sosnowski.Voting.application.Enums.UserRole;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -37,7 +38,11 @@ public class User implements UserDetails {
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         this.getRoles().forEach(role ->
         {
-            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+            if(role.getRoleId() == 1){
+                authorities.add(new SimpleGrantedAuthority(UserRole.ADMIN.name()));
+            } else if(role.getRoleId() == 2){
+                authorities.add(new SimpleGrantedAuthority(UserRole.USER.name()));
+            }
         });
         return authorities;
     }

@@ -1,12 +1,10 @@
 package com.sosnowski.Voting.application.Service;
 
 import com.sosnowski.Voting.application.DTOs.RegisterUserDTO;
-import com.sosnowski.Voting.application.DTOs.UserRegisterDTO;
 import com.sosnowski.Voting.application.Entity.Role;
 import com.sosnowski.Voting.application.Entity.User;
 import com.sosnowski.Voting.application.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,7 +24,8 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
 
     public User addUser(User user) {
-        String pass = passwordEncoder.encode(user.getPassword());
+        String pass;
+        pass = passwordEncoder.encode(user.getPassword());
         user.setPassword(pass);
         return userRepository.save(user);
     }
@@ -59,12 +58,11 @@ public class UserService implements UserDetailsService {
         user.setPassword(encryptedPassword);
         user.setActive(true);
         Role role = new Role();
-        role.setRoleId(Long.valueOf(2));
+        role.setRoleId(2L);
         ArrayList<Role> roles = new ArrayList<>();
         roles.add(role);
         user.setRoles(roles);
-        User createdUser = userRepository.save(user);
-        return createdUser;
+        return userRepository.save(user);
     }
 
     @Override

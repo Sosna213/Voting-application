@@ -6,6 +6,7 @@ import com.sosnowski.Voting.application.Entity.VotingResult;
 import com.sosnowski.Voting.application.Service.VotingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -16,6 +17,7 @@ import java.util.List;
 public class VotingController {
 
     private final VotingService votingService;
+
 
     @PostMapping("/voting/add")
     public ResponseEntity<AddVotingDTO> addVoting(@RequestBody AddVotingDTO addVotingDTO) {
@@ -59,8 +61,8 @@ public class VotingController {
         return ResponseEntity.ok().body(addedUserUsernames);
     }
     @GetMapping("/sharedUsers/{votingId}")
-    public ResponseEntity<Collection<User>> shareVotingToUser(@PathVariable Long votingId) {
-        Collection<User> sharedUsers = votingService.getSharedUsersVoting(votingId);
+    public ResponseEntity<Collection<User>> getUsersSharedForVoting(@PathVariable Long votingId) {
+        Collection<User> sharedUsers = votingService.getSharedUsersForVoting(votingId);
         return ResponseEntity.ok().body(sharedUsers);
     }
     @GetMapping("/votingSharedToUser/{username}")

@@ -56,7 +56,7 @@ public class VotingService {
     public VotingWithAnswersDTO getVotingWithAnswers(Long votingId){
         VotingWithAnswersDTO votingWithAnswersDTO = new VotingWithAnswersDTO();
         votingWithAnswersDTO.setVotingId(votingId);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         votingWithAnswersDTO.setQuestion(votingRepository.getById(votingId).getQuestion());
         votingWithAnswersDTO.setVotingName(votingRepository.getById(votingId).getVotingName());
         votingWithAnswersDTO.setActive(votingRepository.getById(votingId).getActive());
@@ -140,8 +140,7 @@ public class VotingService {
          return votingDeactivated.getVotingId();
      }
 
-
-    public Collection<User> getSharedUsersVoting(Long votingId) {
+    public Collection<User> getSharedUsersForVoting(Long votingId) {
         Collection<User> sharedToUsers = votingRepository.getById(votingId).getSharedToUsers();
         return sharedToUsers;
     }
@@ -170,7 +169,7 @@ public class VotingService {
         return sharedVotingDTOS;
     }
     private List<VotingDTO> mapListOfVotingToVotingDTO(List<Voting> votingList){
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         List<VotingDTO> votingDTOList = new ArrayList<>();
         votingList.forEach(voting -> {
             VotingDTO votingDTO = new VotingDTO();

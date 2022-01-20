@@ -47,5 +47,4 @@ public class UserController {
     public ResponseEntity<Long> getUserIdByUsername(@PathVariable String username){
         return ResponseEntity.ok().body(userService.findUserByUsername(username).getUserId());
     }
-
 }
