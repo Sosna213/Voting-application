@@ -82,4 +82,9 @@ public class VotingController {
         List<ResultDTO> resultDTOSToReturn = votingService.getResultForVoting(votingId);
         return ResponseEntity.ok().body(resultDTOSToReturn);
     }
+    @GetMapping("/voting/get-token/{votingId}")
+    public ResponseEntity<VotingTokenDTO> getVotingToken(@PathVariable Long votingId){
+        VotingTokenDTO token = votingService.getVotingToken(votingId);
+        return ResponseEntity.ok().body(token);
+    }
 }

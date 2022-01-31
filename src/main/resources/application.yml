@@ -50,7 +50,8 @@ permits:
     /sharedUsers/**,
     /votingSharedToUser/**,
     /vote,
-    /voting-result/**
+    /voting-result/**,
+    /voting/get-token/**
 
   admin:
     /users/add

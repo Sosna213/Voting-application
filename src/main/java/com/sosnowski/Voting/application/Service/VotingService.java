@@ -1,5 +1,7 @@
 package com.sosnowski.Voting.application.Service;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.sosnowski.Voting.application.DTOs.*;
 import com.sosnowski.Voting.application.Entity.Answer;
 import com.sosnowski.Voting.application.Entity.User;
@@ -10,15 +12,14 @@ import com.sosnowski.Voting.application.Repository.UserRepository;
 import com.sosnowski.Voting.application.Repository.VotingRepository;
 import com.sosnowski.Voting.application.Repository.VotingResultRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -217,6 +218,16 @@ public class VotingService {
             resultDTOS.add(resultDTO);
         });
         return resultDTOS;
+    }
+    public VotingTokenDTO getVotingToken(Long votingId){
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+        VotingTokenDTO tokenDTO = new VotingTokenDTO();
+        String votingToken = JWT.create()
+                .withSubject(votingRepository.getById(votingId).getVotingId().toString())
+                .withExpiresAt(new Date(System.currentTimeMillis() + 10*60*1000))
+                .sign(algorithm);
+        tokenDTO.setToken(votingToken);
+        return tokenDTO;
     }
 
 }
