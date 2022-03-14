@@ -1,6 +1,6 @@
 package com.sosnowski.Voting.application.Entity;
 
-import com.sosnowski.Voting.application.Enums.UserRole;
+import com.sosnowski.Voting.application.Enum.UserRole;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -1,9 +1,8 @@
 package com.sosnowski.Voting.application.Controller;
 
-import com.sosnowski.Voting.application.DTOs.UserGroupAddDTO;
-import com.sosnowski.Voting.application.DTOs.UserGroupEditDTO;
-import com.sosnowski.Voting.application.DTOs.UserGroupGetDTO;
-import com.sosnowski.Voting.application.Entity.User;
+import com.sosnowski.Voting.application.DTO.UserGroupAddDTO;
+import com.sosnowski.Voting.application.DTO.UserGroupEditDTO;
+import com.sosnowski.Voting.application.DTO.UserGroupGetDTO;
 import com.sosnowski.Voting.application.Entity.UserGroup;
 import com.sosnowski.Voting.application.Service.UserGroupService;
 import lombok.RequiredArgsConstructor;

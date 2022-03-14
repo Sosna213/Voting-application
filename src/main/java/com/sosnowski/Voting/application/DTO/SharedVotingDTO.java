@@ -1,6 +1,5 @@
-package com.sosnowski.Voting.application.DTOs;
+package com.sosnowski.Voting.application.DTO;
 
-import com.sosnowski.Voting.application.Entity.Voting;
 import lombok.Data;
 
 @Data

@@ -1,4 +1,4 @@
-package com.sosnowski.Voting.application.DTOs;
+package com.sosnowski.Voting.application.DTO;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -6,11 +6,11 @@ import java.util.List;
 @Data
 public class VotingWithAnswersDTO implements Serializable {
     Long votingId;
-    Boolean active;
     String votingName;
-    String question;
     Boolean restricted;
+    Boolean active;
     Boolean explicit;
     String endDate;
+    String question;
     List<AnswerDTO> answers;
 }

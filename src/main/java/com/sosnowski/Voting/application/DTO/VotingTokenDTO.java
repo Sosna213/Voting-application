@@ -1,4 +1,4 @@
-package com.sosnowski.Voting.application.DTOs;
+package com.sosnowski.Voting.application.DTO;
 
 import lombok.Data;
 

@@ -1,12 +1,11 @@
 package com.sosnowski.Voting.application.Controller;
 
-import com.sosnowski.Voting.application.DTOs.*;
+import com.sosnowski.Voting.application.DTO.*;
 import com.sosnowski.Voting.application.Entity.User;
 import com.sosnowski.Voting.application.Entity.VotingResult;
 import com.sosnowski.Voting.application.Service.VotingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;

@@ -1,8 +1,12 @@
 package com.sosnowski.Voting.application.Controller;
 
-import com.sosnowski.Voting.application.DTOs.RegisterUserDTO;
+import com.sosnowski.Voting.application.DTO.RegisterUserDTO;
 import com.sosnowski.Voting.application.Entity.User;
 import com.sosnowski.Voting.application.Service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,12 +19,21 @@ public class UserController {
 
     private final UserService userService;
 
+    @ApiOperation(value ="Add user to database operation", response = User.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully added user to database")
+    })
     @PostMapping("/users/add")
     public ResponseEntity<User> addUser(@RequestBody User user) {
         User returnedUser = userService.addUser(user);
         return ResponseEntity.ok().body(returnedUser);
     }
 
+    @ApiOperation(value ="Get all users from database", response = Iterable.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved users from the database"),
+            @ApiResponse(code = 401, message = "Unauthorized"),
+    })
     @GetMapping("/users")
     public ResponseEntity<List<User>> findUsers() {
         List<User> users = userService.findUsers();

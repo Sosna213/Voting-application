@@ -1,18 +1,16 @@
 package com.sosnowski.Voting.application.Service;
 
-import com.sosnowski.Voting.application.DTOs.UserGroupAddDTO;
-import com.sosnowski.Voting.application.DTOs.UserGroupEditDTO;
-import com.sosnowski.Voting.application.DTOs.UserGroupGetDTO;
+import com.sosnowski.Voting.application.DTO.UserGroupAddDTO;
+import com.sosnowski.Voting.application.DTO.UserGroupEditDTO;
+import com.sosnowski.Voting.application.DTO.UserGroupGetDTO;
 import com.sosnowski.Voting.application.Entity.User;
 import com.sosnowski.Voting.application.Entity.UserGroup;
-import com.sosnowski.Voting.application.Entity.Voting;
 import com.sosnowski.Voting.application.Repository.UserGroupRepository;
 import com.sosnowski.Voting.application.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 

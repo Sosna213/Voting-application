@@ -1,6 +1,6 @@
 package com.sosnowski.Voting.application.Service;
 
-import com.sosnowski.Voting.application.DTOs.RegisterUserDTO;
+import com.sosnowski.Voting.application.DTO.RegisterUserDTO;
 import com.sosnowski.Voting.application.Entity.Role;
 import com.sosnowski.Voting.application.Entity.User;
 import com.sosnowski.Voting.application.Repository.UserRepository;
