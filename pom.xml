@@ -110,6 +110,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>voting-application-backend</finalName>
 	</build>
 
 </project>
