@@ -1,8 +1,26 @@
+version: '3.8'
+
 services:
   backend-app:
     image: 'voting-application-backend'
     build: ./../../../
     container_name: backend-application
+    ports:
+      - "8180:8180"
+    depends_on:
+      - db
+  keycloak:
+    image: jboss/keycloak
+    container_name: keycloak
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: db
+      DB_DATABASE: keycloakdb
+      DB_USER: postgres
+      DB_PASSWORD: 1234
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin123
+      PROXY_ADDRESS_FORWARDING: "true"
     ports:
       - "8080:8080"
     depends_on:
@@ -14,3 +32,5 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=1234
+    volumes:
+      - ./../resources/db/initDB/init.sql:/docker-entrypoint-initdb.d/init.sql

@@ -84,3 +84,5 @@ permits:
 
   admin:
     /users/add
+server:
+  port: 8180
