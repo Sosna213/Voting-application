@@ -1,10 +1,12 @@
 spring:
+  flyway:
+    enabled: true
   main:
     banner-mode: off
   jpa:
     hibernate:
       ddl-auto: none
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
@@ -13,26 +15,65 @@ spring:
           lob:
             non_contextual_creation: true
   datasource:
-    url: jdbc:postgresql://localhost:5432/VotingApplication
+    url: jdbc:postgresql://localhost:5432/votingapplication
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: 1234
-
 logging:
   level:
-      org: error
+    org: error
+keycloak:
+  auth-server-url: http://localhost:8080/auth/
+  realm: voting-application-keycloak
+  resource: voting-application-login-client
+  public-client: true
+  principal-attribute: preferred_username
+  ssl-required: none
+  credentials:
+    secret: EemIOxDRrToMZOkGikHDQbDW2C3Wv7Ab
+  use-resource-role-mappings: true
+  bearer-only: true
 
 auth-whitelist:
   /token-refresh,
   /register,
   /login
+#  /users,
+#  /usernames,
+#  /userId/**,
+#  /users-group/add,
+#  /users-group/edit,
+#  /user-group/**,
+#  /user-group/delete/**,
+#  /voting/add,
+#  /voting/**,
+#  /voting/forUser/**,
+#  /voting/delete/**,
+#  /voting-edit,
+#  /deactivate-voting/**,
+#  /shareToUsers,
+#  /sharedUsers/**,
+#  /votingSharedToUser/**,
+#  /vote,
+#  /voting-result/**,
+#  /voting/get-token/**,
+#  /v2/api-docs,
+#  /swagger-resources,
+#  /swagger-resources/**,
+#  /configuration/ui,
+#  /configuration/security,
+#  /swagger-ui.html,
+#  /webjars/**,
+#  /v3/api-docs/**,
+#  /swagger-ui/**
 
 roles:
-  admin: ADMIN
-  user: USER
+  admin: admin
+  user: user
 
 permits:
   user:
+    /register,
     /users,
     /usernames,
     /userId/**,
@@ -55,3 +96,5 @@ permits:
 
   admin:
     /users/add
+server:
+  port: 8180
