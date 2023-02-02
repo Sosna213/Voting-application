@@ -1,14 +1,14 @@
 version: '3.8'
 
 services:
-#  backend-app:
-#    image: 'voting-application-backend'
-#    build: ./../../../
-#    container_name: backend-application
-#    ports:
-#      - "8180:8180"
-#    depends_on:
-#      - db
+  backend-app:
+    image: 'voting-application-backend'
+    build: ./../../../
+    container_name: backend-application
+    ports:
+      - "8180:8180"
+    depends_on:
+      - db
   keycloak:
     image: jboss/keycloak
     container_name: keycloak

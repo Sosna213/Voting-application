@@ -1,12 +1,10 @@
 spring:
-  flyway:
-    enabled: true
   main:
     banner-mode: off
   jpa:
     hibernate:
       ddl-auto: none
-    show-sql: false
+    show-sql: true
     properties:
       hibernate:
         format_sql: true
@@ -15,29 +13,20 @@ spring:
           lob:
             non_contextual_creation: true
   datasource:
-    url: jdbc:postgresql://localhost:5432/votingapplication
+    url: jdbc:postgresql://db:5432/votingapplication
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: 1234
+
+
 logging:
   level:
-    org: error
-keycloak:
-  auth-server-url: http://localhost:8080/auth/
-  realm: voting-application-keycloak
-  resource: voting-application-login-client
-  public-client: true
-  principal-attribute: preferred_username
-  ssl-required: none
-  credentials:
-    secret: EemIOxDRrToMZOkGikHDQbDW2C3Wv7Ab
-  use-resource-role-mappings: true
-  bearer-only: true
+      org: error
 
 auth-whitelist:
   /token-refresh,
   /register,
-  /login
+  /login,
 #  /users,
 #  /usernames,
 #  /userId/**,
@@ -68,12 +57,11 @@ auth-whitelist:
 #  /swagger-ui/**
 
 roles:
-  admin: admin
-  user: user
+  admin: ADMIN
+  user: USER
 
 permits:
   user:
-    /register,
     /users,
     /usernames,
     /userId/**,
