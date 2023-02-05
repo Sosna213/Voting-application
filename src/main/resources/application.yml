@@ -23,10 +23,23 @@ logging:
   level:
       org: error
 
+roles:
+  admin: ADMIN
+  user: USER
+
 auth-whitelist:
   /token-refresh,
   /register,
   /login,
+  /v2/api-docs,
+  /swagger-resources,
+  /swagger-resources/**,
+  /configuration/ui,
+  /configuration/security,
+  /swagger-ui.html,
+  /webjars/**,
+  /v3/api-docs/**,
+  /swagger-ui/**
 #  /users,
 #  /usernames,
 #  /userId/**,
@@ -46,19 +59,6 @@ auth-whitelist:
 #  /vote,
 #  /voting-result/**,
 #  /voting/get-token/**,
-#  /v2/api-docs,
-#  /swagger-resources,
-#  /swagger-resources/**,
-#  /configuration/ui,
-#  /configuration/security,
-#  /swagger-ui.html,
-#  /webjars/**,
-#  /v3/api-docs/**,
-#  /swagger-ui/**
-
-roles:
-  admin: ADMIN
-  user: USER
 
 permits:
   user:
