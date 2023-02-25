@@ -4,7 +4,7 @@ services:
   backend-app:
     image: 'voting-application-backend'
     build: ./../../../
-    container_name: backend-application
+    container_name: backend-app
     ports:
       - "8180:8180"
     depends_on:
@@ -18,3 +18,13 @@ services:
       - POSTGRES_PASSWORD=1234
     volumes:
       - ./../resources/db/initDB/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  frontend:
+    container_name: frontend-container
+    build: ./../../../../VotingApplicationFrontend
+    volumes:
+      - './../../../../VotingApplicationFrontend:/usr/src/app'
+    ports:
+      - "4200:4200"
+    command: >
+      bash -c "npm start"
